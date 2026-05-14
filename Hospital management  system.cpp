@@ -8,7 +8,7 @@
 #include<conio.h>
 
 using namespace std;
-// a function to remove start and end spaces
+// to remove start and end spaces
 string trim(string s)
 {
     int start = 0, end = s.length() - 1;
@@ -30,11 +30,12 @@ virtual void setter()=0;
 virtual string getter()=0;
 };
 
-//-----------------patients class----------------
+//--------------patients class-------------
 class patient: public person{
 private:
 int age, admit, discharge, room_id;
 string disease, doctor_name;
+bool validRoom = true;
 public:
 void setter() override {
     cout<<"enter patient's name"<<endl;
@@ -99,11 +100,16 @@ void setter() override {
     if(!found)
     {
         cout<<"room id not found"<<endl;
+        validRoom = false;
     }
 
     }
     string getter() override{
     return name+" | "+disease+" | "+doctor_name+" | "+to_string(age)+" | "+to_string(admit)+" | "+to_string(discharge)+" | "+to_string(room_id);
+    }
+    bool isValid()
+    {
+        return validRoom;
     }
 
 };
@@ -230,8 +236,14 @@ void add_patient()
         cout<<"there's an error in opening the file!"<<endl;
     }
     p.setter();
+
+if(p.isValid()){
     pfile<<p.getter()<<endl;
     cout<<"Patient added successfully"<<endl;
+}
+else{
+    cout<<"Patient could not be added"<<endl;
+}
     getch();
 }
 
@@ -626,8 +638,8 @@ int main(){
     while(choice!=3){
     cout<<"---------------registration page-----------"<<endl;
     cout<<"1. register to this website"<<endl;
-    cout<<"2. login to this website"<<endl;
-    cout<<"3. exit from this website"<<endl;
+    cout<<"2. login "<<endl;
+    cout<<"3. exit "<<endl;
     cout<<"enter your choice :"<<endl;
     cin>>choice;
     cin.ignore();
